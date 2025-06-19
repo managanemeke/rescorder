@@ -1,0 +1,7 @@
+*
+!/.gitignore
+!/bun.lock
+!/index.ts
+!/package.json
+!/readme.md
+!/tsconfig.json
