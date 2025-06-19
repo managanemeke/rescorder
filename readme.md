@@ -7,3 +7,9 @@
 ```shell
 bun install
 ```
+
+## run
+
+```shell
+bun run index.ts
+```
