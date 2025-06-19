@@ -1,9 +1,11 @@
 /// <reference lib="dom" />
 
 import puppeteer from 'puppeteer';
-import { PuppeteerScreenRecorder } from 'puppeteer-screen-recorder';
 import { mkdir } from 'fs/promises';
 import path from 'path';
+import ffmpeg from 'ffmpeg-static';
+import { execSync } from 'child_process';
+import { writeFileSync, unlinkSync } from 'fs';
 
 const [url = 'https://example.com', duration = '5000'] = Bun.argv.slice(2);
 
@@ -11,40 +13,60 @@ const [url = 'https://example.com', duration = '5000'] = Bun.argv.slice(2);
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
 
-  await page.goto(url);
-  const bodySize = await page.evaluate(() => ({
-    width: document.body.offsetWidth,
-    height: document.body.offsetHeight
-  }));
+  const tempDir = path.join(process.cwd(), 'temp_frames');
+  await mkdir(tempDir, { recursive: true });
 
-  const bodyPosition = await page.evaluate(() => {
-    const rect = document.body.getBoundingClientRect();
-    return { x: rect.left, y: rect.top };
-  });
-
-  const recorder = new PuppeteerScreenRecorder(page, {
-    videoFrame: {
-      width: bodySize.width,
-      height: bodySize.height,
-      x: bodyPosition.x,
-      y: bodyPosition.y
-    },
-    fps: 30
-  });
-
-  const outputDir = path.join(process.cwd(), 'recordings');
-  const outputPath = path.join(outputDir, 'output.mp4');
+  const videoFrames: string[] = [];
 
   try {
-    await mkdir(outputDir, { recursive: true });
-    await recorder.start(outputPath);
+    await page.goto(url, { waitUntil: 'networkidle2' });
 
-    await page.waitForTimeout(Number(duration));
-    await recorder.stop();
-    console.log(`Recording of body saved to ${outputPath}`);
+    const bodyRect = await page.evaluate(() => {
+      const rect = document.body.getBoundingClientRect();
+      return {
+        x: Math.round(rect.left),
+        y: Math.round(rect.top),
+        width: Math.round(rect.width),
+        height: Math.round(rect.height)
+      };
+    });
+
+    const frameCount = Math.ceil(Number(duration) / 100);
+
+    for (let i = 0; i < frameCount; i++) {
+      const addFrame = async () => {
+        const framePath = path.join(tempDir, `frame_${Number(i).toString().padStart(4, '0')}.png`);
+        const buffer = await page.screenshot({
+          clip: bodyRect,
+          type: 'png'
+        });
+        writeFileSync(framePath, buffer);
+        videoFrames.push(framePath);
+      };
+      await addFrame();
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
+    const outputPath = path.join(process.cwd(), 'body_recording.mp4');
+    const ffmpegCmd = [
+      `"${ffmpeg}"`,
+      '-y',
+      '-framerate 10',
+      `-i "${path.join(tempDir, 'frame_%04d.png')}"`,
+      '-c:v libx264',
+      '-pix_fmt yuv420p',
+      `"${outputPath}"`
+    ].join(' ');
+
+    execSync(ffmpegCmd, { stdio: 'inherit' });
+    console.log(`Video saved to ${outputPath}`);
+
   } catch (err) {
     console.error('Error:', err);
   } finally {
+    videoFrames.forEach(frame => {
+      try { unlinkSync(frame); } catch {}
+    });
     await browser.close();
   }
 })();
