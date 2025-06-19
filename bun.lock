@@ -6,7 +6,6 @@
       "dependencies": {
         "ffmpeg-static": "^5.2.0",
         "puppeteer": "^24.10.2",
-        "puppeteer-screen-recorder": "^3.0.6",
       },
       "devDependencies": {
         "@types/bun": "latest",
@@ -22,24 +21,6 @@
     "@babel/helper-validator-identifier": ["@babel/helper-validator-identifier@7.27.1", "", {}, "sha512-D2hP9eA+Sqx1kBZgzxZh0y1trbuU+JoDkiEwqhQ36nodYqJwyEIhPSdMNd7lOm/4io72luTPWH20Yda0xOuUow=="],
 
     "@derhuerst/http-basic": ["@derhuerst/http-basic@8.2.4", "", { "dependencies": { "caseless": "^0.12.0", "concat-stream": "^2.0.0", "http-response-object": "^3.0.1", "parse-cache-control": "^1.0.1" } }, "sha512-F9rL9k9Xjf5blCz8HsJRO4diy111cayL2vkY2XE4r4t3n0yPXVYy3KD3nJ1qbrSn9743UWSXH4IwuCa/HWlGFw=="],
-
-    "@ffmpeg-installer/darwin-arm64": ["@ffmpeg-installer/darwin-arm64@4.1.5", "", { "os": "darwin", "cpu": "arm64" }, "sha512-hYqTiP63mXz7wSQfuqfFwfLOfwwFChUedeCVKkBtl/cliaTM7/ePI9bVzfZ2c+dWu3TqCwLDRWNSJ5pqZl8otA=="],
-
-    "@ffmpeg-installer/darwin-x64": ["@ffmpeg-installer/darwin-x64@4.1.0", "", { "os": "darwin", "cpu": "x64" }, "sha512-Z4EyG3cIFjdhlY8wI9aLUXuH8nVt7E9SlMVZtWvSPnm2sm37/yC2CwjUzyCQbJbySnef1tQwGG2Sx+uWhd9IAw=="],
-
-    "@ffmpeg-installer/ffmpeg": ["@ffmpeg-installer/ffmpeg@1.1.0", "", { "optionalDependencies": { "@ffmpeg-installer/darwin-arm64": "4.1.5", "@ffmpeg-installer/darwin-x64": "4.1.0", "@ffmpeg-installer/linux-arm": "4.1.3", "@ffmpeg-installer/linux-arm64": "4.1.4", "@ffmpeg-installer/linux-ia32": "4.1.0", "@ffmpeg-installer/linux-x64": "4.1.0", "@ffmpeg-installer/win32-ia32": "4.1.0", "@ffmpeg-installer/win32-x64": "4.1.0" } }, "sha512-Uq4rmwkdGxIa9A6Bd/VqqYbT7zqh1GrT5/rFwCwKM70b42W5gIjWeVETq6SdcL0zXqDtY081Ws/iJWhr1+xvQg=="],
-
-    "@ffmpeg-installer/linux-arm": ["@ffmpeg-installer/linux-arm@4.1.3", "", { "os": "linux", "cpu": "arm" }, "sha512-NDf5V6l8AfzZ8WzUGZ5mV8O/xMzRag2ETR6+TlGIsMHp81agx51cqpPItXPib/nAZYmo55Bl2L6/WOMI3A5YRg=="],
-
-    "@ffmpeg-installer/linux-arm64": ["@ffmpeg-installer/linux-arm64@4.1.4", "", { "os": "linux", "cpu": "arm64" }, "sha512-dljEqAOD0oIM6O6DxBW9US/FkvqvQwgJ2lGHOwHDDwu/pX8+V0YsDL1xqHbj1DMX/+nP9rxw7G7gcUvGspSoKg=="],
-
-    "@ffmpeg-installer/linux-ia32": ["@ffmpeg-installer/linux-ia32@4.1.0", "", { "os": "linux", "cpu": "ia32" }, "sha512-0LWyFQnPf+Ij9GQGD034hS6A90URNu9HCtQ5cTqo5MxOEc7Rd8gLXrJvn++UmxhU0J5RyRE9KRYstdCVUjkNOQ=="],
-
-    "@ffmpeg-installer/linux-x64": ["@ffmpeg-installer/linux-x64@4.1.0", "", { "os": "linux", "cpu": "x64" }, "sha512-Y5BWhGLU/WpQjOArNIgXD3z5mxxdV8c41C+U15nsE5yF8tVcdCGet5zPs5Zy3Ta6bU7haGpIzryutqCGQA/W8A=="],
-
-    "@ffmpeg-installer/win32-ia32": ["@ffmpeg-installer/win32-ia32@4.1.0", "", { "os": "win32", "cpu": "ia32" }, "sha512-FV2D7RlaZv/lrtdhaQ4oETwoFUsUjlUiasiZLDxhEUPdNDWcH1OU9K1xTvqz+OXLdsmYelUDuBS/zkMOTtlUAw=="],
-
-    "@ffmpeg-installer/win32-x64": ["@ffmpeg-installer/win32-x64@4.1.0", "", { "os": "win32", "cpu": "x64" }, "sha512-Drt5u2vzDnIONf4ZEkKtFlbvwj6rI3kxw1Ck9fpudmtgaZIHD4ucsWB2lCZBXRxJgXR+2IMSti+4rtM4C4rXgg=="],
 
     "@puppeteer/browsers": ["@puppeteer/browsers@2.10.5", "", { "dependencies": { "debug": "^4.4.1", "extract-zip": "^2.0.1", "progress": "^2.0.3", "proxy-agent": "^6.5.0", "semver": "^7.7.2", "tar-fs": "^3.0.8", "yargs": "^17.7.2" }, "bin": { "browsers": "lib/cjs/main-cli.js" } }, "sha512-eifa0o+i8dERnngJwKrfp3dEq7ia5XFyoqB17S4gK8GhsQE4/P8nxOfQSE0zQHxzzLo/cmF+7+ywEQ7wK7Fb+w=="],
 
@@ -60,8 +41,6 @@
     "argparse": ["argparse@2.0.1", "", {}, "sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q=="],
 
     "ast-types": ["ast-types@0.13.4", "", { "dependencies": { "tslib": "^2.0.1" } }, "sha512-x1FCFnFifvYDDzTaLII71vG5uvDwgtmDTEVWAxrgeiR8VjMONcCXJx7E+USjDtHlwFmt9MysbqgF9b9Vjr6w+w=="],
-
-    "async": ["async@0.2.10", "", {}, "sha512-eAkdoKxU6/LkKDBzLpT+t6Ff5EtfSF4wx1WfJiPEEV7WNLnDaRXk0oVysiEPm262roaachGexwUv94WhSgN5TQ=="],
 
     "b4a": ["b4a@1.6.7", "", {}, "sha512-OnAYlL5b7LEkALw87fUVafQw5rVR9RjwGd4KUwNQ6DrrNmaVaUCgLipfVlzrPQ4tWOR9P0IXGNOx50jYCCdSJg=="],
 
@@ -133,8 +112,6 @@
 
     "ffmpeg-static": ["ffmpeg-static@5.2.0", "", { "dependencies": { "@derhuerst/http-basic": "^8.2.0", "env-paths": "^2.2.0", "https-proxy-agent": "^5.0.0", "progress": "^2.0.3" } }, "sha512-WrM7kLW+do9HLr+H6tk7LzQ7kPqbAgLjdzNE32+u3Ff11gXt9Kkkd2nusGFrlWMIe+XaA97t+I8JS7sZIrvRgA=="],
 
-    "fluent-ffmpeg": ["fluent-ffmpeg@2.1.3", "", { "dependencies": { "async": "^0.2.9", "which": "^1.1.1" } }, "sha512-Be3narBNt2s6bsaqP6Jzq91heDgOEaDCJAXcE3qcma/EJBSy5FB4cvO31XBInuAuKBx8Kptf8dkhjK0IOru39Q=="],
-
     "get-caller-file": ["get-caller-file@2.0.5", "", {}, "sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg=="],
 
     "get-stream": ["get-stream@5.2.0", "", { "dependencies": { "pump": "^3.0.0" } }, "sha512-nBF+F1rAZVCu/p7rjzgA+Yb4lfYXrpl7a6VmJrU8wF9I1CKvP/QwPNZHnOlwbTkY6dvtFIzFMSyQXbLoTQPRpA=="],
@@ -156,8 +133,6 @@
     "is-arrayish": ["is-arrayish@0.2.1", "", {}, "sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg=="],
 
     "is-fullwidth-code-point": ["is-fullwidth-code-point@3.0.0", "", {}, "sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg=="],
-
-    "isexe": ["isexe@2.0.0", "", {}, "sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw=="],
 
     "js-tokens": ["js-tokens@4.0.0", "", {}, "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="],
 
@@ -205,8 +180,6 @@
 
     "puppeteer-core": ["puppeteer-core@24.10.2", "", { "dependencies": { "@puppeteer/browsers": "2.10.5", "chromium-bidi": "5.1.0", "debug": "^4.4.1", "devtools-protocol": "0.0.1452169", "typed-query-selector": "^2.12.0", "ws": "^8.18.2" } }, "sha512-CnzhOgrZj8DvkDqI+Yx+9or33i3Y9uUYbKyYpP4C13jWwXx/keQ38RMTMmxuLCWQlxjZrOH0Foq7P2fGP7adDQ=="],
 
-    "puppeteer-screen-recorder": ["puppeteer-screen-recorder@3.0.6", "", { "dependencies": { "fluent-ffmpeg": "^2.1.2" }, "optionalDependencies": { "@ffmpeg-installer/ffmpeg": "^1.1.0" }, "peerDependencies": { "puppeteer": "19.0.0" } }, "sha512-yzWlXWGi/FjsAe0fVr/zYlKFKsH1PGc6Pm7t58wlzVbs/jdLimjdO5VaTIqDJIkWuXFfD4WuDFptdU6AG3ls/Q=="],
-
     "readable-stream": ["readable-stream@3.6.2", "", { "dependencies": { "inherits": "^2.0.3", "string_decoder": "^1.1.1", "util-deprecate": "^1.0.1" } }, "sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA=="],
 
     "require-directory": ["require-directory@2.1.1", "", {}, "sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q=="],
@@ -252,8 +225,6 @@
     "undici-types": ["undici-types@7.8.0", "", {}, "sha512-9UJ2xGDvQ43tYyVMpuHlsgApydB8ZKfVYTsLDhXkFL/6gfkp+U8xTGdh8pMJv1SpZna0zxG1DwsKZsreLbXBxw=="],
 
     "util-deprecate": ["util-deprecate@1.0.2", "", {}, "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw=="],
-
-    "which": ["which@1.3.1", "", { "dependencies": { "isexe": "^2.0.0" }, "bin": { "which": "./bin/which" } }, "sha512-HxJdYWq1MTIQbJ3nw0cqssHoTNU267KlrDuGZ1WYlxDStUtKUhOaJmh112/TZmHxxUfuJqPXSOm7tDyas0OSIQ=="],
 
     "wrap-ansi": ["wrap-ansi@7.0.0", "", { "dependencies": { "ansi-styles": "^4.0.0", "string-width": "^4.1.0", "strip-ansi": "^6.0.0" } }, "sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q=="],
 
