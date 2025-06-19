@@ -3,6 +3,8 @@ import { PuppeteerScreenRecorder } from 'puppeteer-screen-recorder';
 import { mkdir } from 'fs/promises';
 import path from 'path';
 
+const [url = 'https://example.com', duration = '5000'] = Bun.argv.slice(2);
+
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
@@ -21,8 +23,8 @@ import path from 'path';
 
   try {
     await recorder.start(outputPath);
-    await page.goto('https://example.com');
-    await page.waitForTimeout(5000);
+    await page.goto(url);
+    await page.waitForTimeout(Number(duration));
     await recorder.stop();
   } catch (err) {
     console.error('Ошибка записи:', err);
