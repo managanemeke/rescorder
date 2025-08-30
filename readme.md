@@ -28,3 +28,9 @@ campaign="vkmax25" \
   && link="https://light.maergroup.ru/storage/samples/$campaign/?display=$display&content=$content" \
   && bun run index.ts $link $name $duration $rate
 ```
+
+### csv
+
+```shell
+bun csv.ts "input/vkmax25.csv"
+```

@@ -6,6 +6,7 @@
 !/input/
 !/output/
 !/bun.lock
+!/csv.ts
 !/index.ts
 !/package.json
 !/readme.md
