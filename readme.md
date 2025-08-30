@@ -24,6 +24,7 @@ campaign="vkmax25" \
   && content=27152 \
   && duration=5000 \
   && rate=25 \
+  && name="${campaign}_${display}_${content}" \
   && link="https://light.maergroup.ru/storage/samples/$campaign/?display=$display&content=$content" \
-  && bun run index.ts $link $content $duration $rate
+  && bun run index.ts $link $name $duration $rate
 ```
