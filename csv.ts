@@ -140,18 +140,19 @@ async function parseCsv(filePath: string): Promise<CsvRecord[]> {
     const lines = content.trim().split('\n');
     const records: CsvRecord[] = [];
 
-    for (let i = 1; i < lines.length; i++) {
-      const line = lines[i].trim();
-      if (!line) continue;
+    const dataLines = lines.slice(1);
+    for (const rawLine of dataLines) {
+      const line = rawLine.trim();
+      if (line === '') continue;
 
       const [campaign, display, content, duration, rate] = line.split(',');
 
       records.push({
-        campaign: campaign.trim(),
-        display: display.trim(),
-        content: content.trim(),
-        duration: duration.trim(),
-        rate: rate.trim()
+        campaign: campaign?.trim() ?? "",
+        display: display?.trim() ?? "",
+        content: content?.trim() ?? "",
+        duration: duration?.trim() ?? "",
+        rate: rate?.trim() ?? "",
       });
     }
 
@@ -163,6 +164,11 @@ async function parseCsv(filePath: string): Promise<CsvRecord[]> {
 }
 
 async function main() {
+  if (!csvFilePath) {
+    console.log('❌ No csv file');
+    return;
+  }
+
   console.log(`📁 Processing CSV: ${csvFilePath}`);
 
   const records = await parseCsv(csvFilePath);
