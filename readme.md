@@ -11,7 +11,7 @@ bun install
 ## run
 
 ```shell
-bun run index.ts 
+bun run index.ts
 ```
 
 ```shell
