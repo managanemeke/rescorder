@@ -1,5 +1,9 @@
 *
-!/.gitignore
+
+!.editorconfig
+!.gitignore
+
+!/output/
 !/bun.lock
 !/index.ts
 !/package.json

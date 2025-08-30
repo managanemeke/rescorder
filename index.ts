@@ -1,25 +1,41 @@
 /// <reference lib="dom" />
 
 import puppeteer from 'puppeteer';
-import { mkdir } from 'fs/promises';
+import { mkdir, rm } from 'fs/promises';
 import path from 'path';
 import ffmpeg from 'ffmpeg-static';
 import { execSync } from 'child_process';
-import { writeFileSync, unlinkSync } from 'fs';
+import { writeFileSync } from 'fs';
 
-const [url = 'https://example.com', duration = '5000'] = Bun.argv.slice(2);
+const [
+  url = 'https://example.com',
+  name = 'output',
+  duration = '5000',
+  rate = '25',
+] = Bun.argv.slice(2);
 
 (async () => {
-  const browser = await puppeteer.launch();
+  const framesPerSecond = Number(rate);
+  const timeout = 60 * 1000;
+
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
+
   const page = await browser.newPage();
+
+  page.setDefaultNavigationTimeout(timeout);
+  page.setDefaultTimeout(timeout);
 
   const tempDir = path.join(process.cwd(), 'temp_frames');
   await mkdir(tempDir, { recursive: true });
 
-  const videoFrames: string[] = [];
-
   try {
-    await page.goto(url, { waitUntil: 'networkidle2' });
+    await page.goto(url, {
+      waitUntil: 'networkidle2',
+      timeout: timeout,
+    });
 
     const bodyRect = await page.evaluate(() => {
       const rect = document.body.getBoundingClientRect();
@@ -31,42 +47,72 @@ const [url = 'https://example.com', duration = '5000'] = Bun.argv.slice(2);
       };
     });
 
-    const frameCount = Math.ceil(Number(duration) / 100);
+    const frameCount = Math.ceil(Number(duration) / 1000) * framesPerSecond;
+    const frameDuration = 1000 / framesPerSecond;
+
+    console.log("Запись начата. Кадров:", frameCount, "Интервал:", frameDuration, "мс");
+
+    const screenshotPromises: Promise<Uint8Array>[] = [];
+
+    const takeScreenshot = async (index: number): Promise<Uint8Array> => {
+      try {
+        return await page.screenshot({
+          clip: bodyRect,
+          type: 'png',
+        });
+      } catch (error) {
+        console.error(`Ошибка при скриншоте ${index}:`, error);
+        throw error;
+      }
+    };
 
     for (let i = 0; i < frameCount; i++) {
-      const addFrame = async () => {
-        const framePath = path.join(tempDir, `frame_${Number(i).toString().padStart(4, '0')}.png`);
-        const buffer = await page.screenshot({
-          clip: bodyRect,
-          type: 'png'
-        });
-        writeFileSync(framePath, buffer);
-        videoFrames.push(framePath);
-      };
-      await addFrame();
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const promise = new Promise<Uint8Array>((resolve) => {
+        setTimeout(async () => {
+          try {
+            const screenshot = await takeScreenshot(i);
+            resolve(screenshot);
+          } catch (error) {
+            resolve(new Uint8Array());
+          }
+        }, i * frameDuration);
+      });
+      screenshotPromises.push(promise);
     }
 
-    const outputPath = path.join(process.cwd(), 'body_recording.mp4');
+    const screenshots = await Promise.all(screenshotPromises);
+
+    for (let [index, screenshot] of screenshots.entries()) {
+      if (screenshot.length > 0) {
+        const framePath = path.join(tempDir, `frame_${index.toString().padStart(4, '0')}.png`);
+        writeFileSync(framePath, screenshot);
+      }
+    }
+
+    const outputPath = path.join(process.cwd(), 'output', `${name}.mp4`);
     const ffmpegCmd = [
       `"${ffmpeg}"`,
       '-y',
-      '-framerate 10',
+      `-framerate ${framesPerSecond}`,
       `-i "${path.join(tempDir, 'frame_%04d.png')}"`,
       '-c:v libx264',
       '-pix_fmt yuv420p',
+      '-crf 23',
       `"${outputPath}"`
     ].join(' ');
 
     execSync(ffmpegCmd, { stdio: 'inherit' });
-    console.log(`Video saved to ${outputPath}`);
+    console.log(`Видео сохранено: ${outputPath}`);
 
   } catch (err) {
-    console.error('Error:', err);
+    console.error('Ошибка:', err);
   } finally {
-    videoFrames.forEach(frame => {
-      try { unlinkSync(frame); } catch {}
-    });
-    await browser.close();
+    await browser.close().catch(console.error);
+    try {
+      await rm(tempDir, { recursive: true, force: true });
+      console.log('Временные файлы удалены');
+    } catch (cleanupError) {
+      console.warn('Не удалось очистить временные файлы:', cleanupError);
+    }
   }
 })();
