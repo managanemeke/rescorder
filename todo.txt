@@ -1,0 +1,4 @@
+2025-08-31 Add channel column to csv
+2025-08-31 Add format column to csv (jpg, mp4)
+2025-08-31 Add link column to csv
+2025-08-31 Add mode column to csv (dummy, default, freeze)
